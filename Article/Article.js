@@ -85,8 +85,22 @@ const data = [
     thirdParagraph: `Hodor hodor - hodor... Hodor hodor hodor hodor. Hodor. Hodor! Hodor hodor, hodor hodor hodor hodor hodor; hodor hodor? Hodor!
           Hodor hodor, HODOR hodor, hodor hodor?! Hodor! Hodor hodor, HODOR hodor, hodor hodor, hodor, hodor hodor. Hodor, hodor.
           Hodor. Hodor, hodor, hodor. Hodor hodor... Hodor hodor hodor?! Hodor, hodor... Hodor hodor HODOR hodor, hodor hodor. Hodor.`
-  }
-];
+  },
+  {
+    title: 'Learning Javascript Components',
+    date: 'Aug 13th, 2019',
+    firstParagraph: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint laborum cum saepe ullam
+      mollitia corrupti ab laudantium dignissimos illum cumque, beatae, esse alias ea blanditiis dolorem omnis?
+      Consequatur provident, voluptates eveniet officiis rem deserunt quibusdam non excepturi tempore recusandae
+      ipsa atque quas? Quos tenetur voluptatem dolor iusto, officiis ea voluptatum.`,
+
+    secondParagraph: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolores veritatis, ab at earum
+      fugiat perspiciatis libero maxime repellat sit.`,
+
+    thirdParagraph: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla odio, non atque ex molestiae
+      nisi excepturi recusandae consequatur sapiente numquam inventore itaque cum dolorum, veniam est. Ipsa, porro,
+      iure! Maiores?`
+  }];
 
 
 /* Step 1: Create a function that creates a component. You will want your component to look like the template below: 
@@ -113,3 +127,59 @@ const data = [
   Step 5: Add a new article to the array. Make sure it is in the same format as the others. Refresh the page to see the new artible
 
 */
+
+
+// create an Article component
+const makeArticle = articleSpecs => {
+
+  const {title, date, firstParagraph, secondParagraph, thirdParagraph} = articleSpecs;
+
+  const article = document.createElement('div');
+  article.className = 'article';
+
+  const h2 = document.createElement('h2');
+  h2.textContent = title;
+
+  const dateP = document.createElement('p');
+  dateP.className = 'date';
+  dateP.textContent = date;
+
+  const p1 = document.createElement('p');
+  p1.textContent = firstParagraph;
+  const p2 = document.createElement('p');
+  p2.textContent = secondParagraph;
+  const p3 = document.createElement('p');
+  p3.textContent = thirdParagraph;
+
+  const span = document.createElement('span');
+  span.className = 'expandButton';
+  span.textContent = 'expand';
+
+  span.addEventListener('click', openCloseArticle);
+
+  article.appendChild(h2);
+  article.appendChild(dateP);
+  article.appendChild(p1);
+  article.appendChild(p2);
+  article.appendChild(p3);
+  article.appendChild(span);
+
+  return article;
+};
+
+
+// expand/collapse the article text
+const openCloseArticle = event => {
+  event.target.parentElement.classList.toggle('article-open');
+
+  if (event.target.textContent === 'expand')
+    event.target.textContent = 'collapse';
+  else event.target.textContent = 'expand';
+};
+
+
+// now add each article to the articles div
+articles = document.querySelector('.articles');
+
+data.forEach(art => articles.appendChild(makeArticle(art)));
+
